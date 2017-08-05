@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Main page</title>
+  <link href="../../static/css/materialize.css" rel="stylesheet"/>
+  <style>
+
+   html { width: 100%; height:100%; overflow:hidden; }
+
+body {
+	width: 100%;
+	height:100%;
+	font-family: 'Open Sans', sans-serif;
+	background: #092756;
+	background: -moz-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%),-moz-linear-gradient(top,  rgba(57,173,219,.25) 0%, rgba(42,60,87,.4) 100%), -moz-linear-gradient(-45deg,  #670d10 0%, #092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -webkit-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -webkit-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -o-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -o-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -o-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -ms-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), -ms-linear-gradient(top,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), -ms-linear-gradient(-45deg,  #670d10 0%,#092756 100%);
+	background: -webkit-radial-gradient(0% 100%, ellipse cover, rgba(104,128,138,.4) 10%,rgba(138,114,76,0) 40%), linear-gradient(to bottom,  rgba(57,173,219,.25) 0%,rgba(42,60,87,.4) 100%), linear-gradient(135deg,  #670d10 0%,#092756 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3E1D6D', endColorstr='#092756',GradientType=1 );
+  }
+  <!--.mainbody {-->
+	<!--position: relative;-->
+	<!--top: 20%;-->
+	<!--left: 35%;-->
+	<!--margin: -150px 0 0 -150px;-->
+	<!--box-shadow: 0 15px 25px 0 rgba(0,0,0,0.50);-->
+<!--}-->
+.mainbody p { color: #fff; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
+.footer {
+  padding: 24px 0; }
+
+.footer .copyright {
+  font-size: 0.8571em; }
+
+.itemadd_delete_list{
+    float:right;
+    rgba(57,173,219,.25) 0%;
+}
+
+ </style>
+</head>
+
+<body>
+<center>
+      <h1 style="color:#fff;font-size:50px"><i>Google Keep</i></h1>
+      <p style="color:#fff;font-size:20px"><i>Capture your thoughts!!</i></p>
+      <button class="btn waves-effect waves-teal" style="position:relative; margin:-50px" ><i class="material-icons right">+</i>Add List</button>
+</center>
+
+<!--<div class="mainbody">-->
+    <ul class="collapsible popout" data-collapsible="accordion" id="maincontainer">
+
+    <!--<li>-->
+      <!--<div class="collapsible-header">First-->
+          <!--<button class="btn-floating waves-effect waves-light itemadd_delete_list">&#215;</button>-->
+          <!--<button class="btn-floating waves-effect waves-light itemadd_delete_list">+</button>-->
+      <!--</div>-->
+      <!--<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>-->
+
+    <!--</li>-->
+    <!--<li>-->
+      <!--<div class="collapsible-header">Second</div>-->
+      <!--<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>-->
+    <!--</li>-->
+    <!--<li>-->
+      <!--<div class="collapsible-header">Third</div>-->
+      <!--<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>-->
+    <!--</li>-->
+    </ul>
+<!--</div>-->
+<!-- Modal Structure -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-body">
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean. A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth. Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.
+            </p>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default btn-simple">Nice Button</button>
+            <button type="button" class="btn btn-danger btn-simple" data-dismiss="modal">Close</button>
+         </div>
+      </div>
+   </div>
+</div>
+</body>
+<script src="../../static/js/jquery-3.2.1.min.js"></script>
+<script src="../../static/js/jquery.tmpl.min.js"></script>
+<script src="../../static/js/materialize.min.js"></script>
+
+<script type="text/javascript">
+     $(document).ready(function(){
+        $('.collapsible').collapsible();
+         $.ajax({
+                    url : "/todo/rest_list/",
+                    success : function(data) {
+                        for(var i=0;i<data.length;i++){
+                            $.tmpl('<li id="${id}"><div class="collapsible-header"> ${name}<button class="btn-floating waves-effect waves-light itemadd_delete_list delete-btn">&#215;</button> <button class="btn-floating waves-effect waves-light itemadd_delete_list">+</button> </div> <div class="collapsible-body" id="items' + data[i]['id'] +'"> </div></li>',data[i]).appendTo( "#maincontainer" );
+                            $.ajax({
+                                url : "/todo/rest_list/"+data[i].id+"/items/",
+                                success : function(item_data){
+                                  for(var j=0;j<item_data.length;j++){
+                                     $.tmpl('<button class="btn btn-primary" data-toggle="modal" data-target="#myModal" id=${id}>${description}</button>',item_data[j]).appendTo('#items'+item_data[j]['todolists']);
+                                 }
+                                }
+                            });
+                        }
+                    },
+                    error : function() {
+                        alert("Error");
+                    }
+            });
+
+            $('body').on('click','.delete-btn',function(){
+                $(this).parent().parent().remove();
+            });
+
+     });
+
+</script>
+</html>
+
+<!--$('body').on('click','.delete-btn',function(){-->
+                <!--console.log($(this).parent().parent().attr('id'));-->
+                <!--$.ajax({-->
+                   <!--url: "/todo/rest_list/"+$(this).parent().parent().attr('id')+"/",-->
+                   <!--type: 'DELETE',-->
+                   <!--&lt;!&ndash;data: ,&ndash;&gt;-->
+                   <!--success: function (data){-->
+                        <!--console.log(data + 'Success');-->
+                   <!--}-->
+                <!--});-->
+                <!--$(this).parent().parent().remove();-->
+            <!--});-->

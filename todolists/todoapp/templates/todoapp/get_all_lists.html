@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Lists</title>
+    <style>
+    h1 {
+        color: white;
+        text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #dddd;
+        }
+    </style>
+</head>
+<body>
+<center>
+    <h1>TodoLists</h1>
+      <table>
+          <th>Id</th><th>Name</th><th>CreationDate</th>
+        {% for list in all_lists%}
+        <tr>
+            <td><a href="{% url 'todoapp:get_list_items' list.id %}">{{list.id}}</a></td>
+            <td><a href="{% url 'todoapp:get_list_items' list.name %}">{{list.name}}</a></td>
+            <td>{{list.creation_date}}</td>
+            <!-- https://docs.djangoproject.com/en/1.11/topics/http/urls/-->
+        </tr>
+        {% endfor %}
+      </table>
+</center>
+</body>
+</html>
